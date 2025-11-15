@@ -1,7 +1,6 @@
-from gui_app import ColorConvGUI
+from gui_app import gui_app
 import tkinter as tk
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = ColorConvGUI(root)
-    root.mainloop()
+    app = gui_app()
+    app.run()
