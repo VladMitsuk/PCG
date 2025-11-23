@@ -3,7 +3,6 @@ from tkinter import ttk
 from color_logic import *
 from validation import *
 
-
 class ColorConverterApp:
     def __init__(self, root):
         self.root = root
@@ -41,6 +40,10 @@ class ColorConverterApp:
         self.a = self.create_entry(frame, 2, 2, vcmd)
         self.b_lab = self.create_entry(frame, 2, 3, vcmd)
 
+        # notification
+        self.notification = ttk.Label(self.root, foreground="red")
+        self.notification.grid(row=10, column=0, columnspan=5, pady=5)
+
     def create_entry(self, parent, row, col, vcmd):
         entry = ttk.Entry(parent, width=7, validate="key", validatecommand=vcmd)
         entry.insert(0, "0")
@@ -74,9 +77,17 @@ class ColorConverterApp:
     # ---------------------- Update Logic ----------------------
 
     def update_from_rgb(self):
-        r = clamp(safe_int(self.r.get()), 0, 255)
-        g = clamp(safe_int(self.g.get()), 0, 255)
-        b = clamp(safe_int(self.b.get()), 0, 255)
+        r = int(self.r.get())
+        g = int(self.g.get())
+        b = int(self.b.get())
+
+        self.check_range(r, 0, 255, "R")
+        self.check_range(g, 0, 255, "G")
+        self.check_range(b, 0, 255, "B")
+
+        r = clamp(r, 0, 255)
+        g = clamp(g, 0, 255)
+        b = clamp(b, 0, 255)
         self.set_vals(self.r, r, self.g, g, self.b, b)
 
         # -> CMYK
@@ -88,10 +99,20 @@ class ColorConverterApp:
         self.set_vals(self.L, L, self.a, a, self.b_lab, b_lab)
 
     def update_from_cmyk(self):
-        c = clamp(safe_int(self.c.get()), 0, 100)
-        m = clamp(safe_int(self.m.get()), 0, 100)
-        y = clamp(safe_int(self.y.get()), 0, 100)
-        k = clamp(safe_int(self.k.get()), 0, 100)
+        c = int(self.c.get())
+        m = int(self.m.get())
+        y = int(self.y.get())
+        k = int(self.k.get())
+
+        self.check_range(c, 0, 100, "C")
+        self.check_range(m, 0, 100, "M")
+        self.check_range(y, 0, 100, "Y")
+        self.check_range(k, 0, 100, "K")
+
+        c = clamp(c, 0, 100)
+        m = clamp(m, 0, 100)
+        y = clamp(y, 0, 100)
+        k = clamp(k, 0, 100)
         self.set_vals(self.c, c, self.m, m, self.y, y, self.k, k)
 
         # -> RGB
@@ -106,9 +127,19 @@ class ColorConverterApp:
         if self.a.get() in "-" or \
                 self.b_lab.get() in "-":
             return
-        L = clamp(safe_int(self.L.get()), 0, 100)
-        a = clamp(safe_int(self.a.get()), -128, 127)
-        b = clamp(safe_int(self.b_lab.get()), -128, 127)
+        L = int(self.L.get())
+        a = int(self.a.get())
+        b = int(self.b_lab.get())
+
+        # уведомления (но не прекращаем выполнение)
+        self.check_range(L, 0, 100, "L")
+        self.check_range(a, -128, 127, "a")
+        self.check_range(b, -128, 127, "b")
+
+        # clamp как раньше
+        L = clamp(L, 0, 100)
+        a = clamp(a, -128, 127)
+        b = clamp(b, -128, 127)
         self.set_vals(self.L, L, self.a, a, self.b_lab, b)
 
         # -> RGB
@@ -120,6 +151,17 @@ class ColorConverterApp:
         self.set_vals(self.c, c, self.m, m, self.y, y_c, self.k, k)
 
     # ---------------------- Helper ----------------------
+
+    def notify(self, text, duration=2000):
+        """Показывает уведомление и автоматически скрывает его через duration мс"""
+        self.notification.config(text=text)
+        self.root.after(duration, lambda: self.notification.config(text=""))
+
+    def check_range(self, value, min_v, max_v, field_name):
+        if value < min_v or value > max_v:
+            self.notify(f"{field_name}: {value} вне диапазона [{min_v}; {max_v}]")
+            return False
+        return True
 
     def set_vals(self, *pairs):
         for entry, value in zip(pairs[::2], pairs[1::2]):
