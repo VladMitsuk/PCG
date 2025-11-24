@@ -23,33 +23,48 @@ class ColorConverterApp:
 
         # RGB
         ttk.Label(frame, text="RGB").grid(row=0, column=0, pady=5)
-        self.r = self.create_entry(frame, 0, 1, vcmd)
-        self.g = self.create_entry(frame, 0, 2, vcmd)
-        self.b = self.create_entry(frame, 0, 3, vcmd)
+        self.r = self.create_spinbox(frame, 0, 1, 0, 255, vcmd)
+        self.g = self.create_spinbox(frame, 0, 2, 0, 255, vcmd)
+        self.b = self.create_spinbox(frame, 0, 3, 0, 255, vcmd)
 
         # CMYK
         ttk.Label(frame, text="CMYK").grid(row=1, column=0, pady=5)
-        self.c = self.create_entry(frame, 1, 1, vcmd)
-        self.m = self.create_entry(frame, 1, 2, vcmd)
-        self.y = self.create_entry(frame, 1, 3, vcmd)
-        self.k = self.create_entry(frame, 1, 4, vcmd)
+        self.c = self.create_spinbox(frame, 1, 1, 0, 100, vcmd)
+        self.m = self.create_spinbox(frame, 1, 2, 0, 100, vcmd)
+        self.y = self.create_spinbox(frame, 1, 3, 0, 100, vcmd)
+        self.k = self.create_spinbox(frame, 1, 4, 0, 100, vcmd)
 
         # Lab
         ttk.Label(frame, text="Lab").grid(row=2, column=0, pady=5)
-        self.L = self.create_entry(frame, 2, 1, vcmd)
-        self.a = self.create_entry(frame, 2, 2, vcmd)
-        self.b_lab = self.create_entry(frame, 2, 3, vcmd)
+        self.L = self.create_spinbox(frame, 2, 1, 0, 100, vcmd)
+        self.a = self.create_spinbox(frame, 2, 2, -128, 127, vcmd)
+        self.b_lab = self.create_spinbox(frame, 2, 3, -128, 127, vcmd)
 
         # notification
         self.notification = ttk.Label(self.root, foreground="red")
         self.notification.grid(row=10, column=0, columnspan=5, pady=5)
 
-    def create_entry(self, parent, row, col, vcmd):
-        entry = ttk.Entry(parent, width=7, validate="key", validatecommand=vcmd)
-        entry.insert(0, "0")
-        entry.grid(row=row, column=col, padx=3)
-        entry.bind("<KeyRelease>", self.on_change)
-        return entry
+    def create_spinbox(self, parent, row, col, from_, to_, vcmd):
+        var = tk.StringVar(value="0")
+        spin = tk.Spinbox(
+            parent,
+            from_=from_,
+            to_=to_,
+            width=7,
+            textvariable=var,
+            validate="key",
+            validatecommand=vcmd
+        )
+        spin.var = var
+        spin.grid(row=row, column=col, padx=3)
+        spin.bind("<KeyRelease>", self.on_change)
+        spin.config(command=lambda w=spin: self.on_change_spin(w))
+        return spin
+
+    def on_change_spin(self, widget):
+        if self.updating:
+            return
+        self.on_change(type("Event", (), {"widget": widget}))
 
     # ---------------------- Event Handling ----------------------
 
@@ -77,9 +92,9 @@ class ColorConverterApp:
     # ---------------------- Update Logic ----------------------
 
     def update_from_rgb(self):
-        r = int(self.r.get())
-        g = int(self.g.get())
-        b = int(self.b.get())
+        r = safe_int(self.r.get())
+        g = safe_int(self.g.get())
+        b = safe_int(self.b.get())
 
         self.check_range(r, 0, 255, "R")
         self.check_range(g, 0, 255, "G")
@@ -99,10 +114,10 @@ class ColorConverterApp:
         self.set_vals(self.L, L, self.a, a, self.b_lab, b_lab)
 
     def update_from_cmyk(self):
-        c = int(self.c.get())
-        m = int(self.m.get())
-        y = int(self.y.get())
-        k = int(self.k.get())
+        c = safe_int(self.c.get())
+        m = safe_int(self.m.get())
+        y = safe_int(self.y.get())
+        k = safe_int(self.k.get())
 
         self.check_range(c, 0, 100, "C")
         self.check_range(m, 0, 100, "M")
@@ -127,7 +142,7 @@ class ColorConverterApp:
         if self.a.get() in "-" or \
                 self.b_lab.get() in "-":
             return
-        L = int(self.L.get())
+        L = safe_int(self.L.get())
         a = int(self.a.get())
         b = int(self.b_lab.get())
 
