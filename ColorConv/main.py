@@ -1,5 +1,7 @@
-from gui_app import gui_app
+from gui import ColorConverterApp
+import tkinter as tk
 
 if __name__ == "__main__":
-    app = gui_app()
-    app.run()
+    root = tk.Tk()
+    app = ColorConverterApp(root)
+    root.mainloop()
