@@ -3,6 +3,7 @@ from tkinter import ttk
 from color_logic import *
 from validation import *
 
+
 class ColorConverterApp:
     def __init__(self, root):
         self.root = root
