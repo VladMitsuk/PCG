@@ -27,7 +27,6 @@ class Application:
         """
         Метод запускает процесс обработки файлов в новом потоке.
         """
-        # --- ИСПРАВЛЕННАЯ ПРОВЕРКА ---
         # Проверяем, существует ли объект и запущен ли он
         if self.worker_thread is not None and self.worker_thread.isRunning():
             QMessageBox.warning(self.main_window, "Внимание",
@@ -52,13 +51,8 @@ class Application:
         # 5. Соединяем сигнал запуска потока с методом, который выполняет работу
         self.worker_thread.started.connect(self.worker_logic.run_processing)
 
-        # --- ИСПРАВЛЕННОЕ УПРАВЛЕНИЕ ПАМЯТЬЮ ---
         # Когда логика worker завершится (сигнал finished), мы останавливаем QThread (слот quit)
         self.worker_logic.finished.connect(self.worker_thread.quit)
-
-        # Мы НЕ используем deleteLater() здесь. Python и PyQtGC (Garbage Collector)
-        # справятся с удалением объектов, когда они больше не нужны,
-        # без ручного вызова, который приводил к ошибке доступа.
 
         # 6. Запускаем поток
         self.worker_thread.start()
