@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication
+from PyQt6.QtWidgets import QApplication, QMessageBox
 from PyQt6.QtCore import QThread
 from gui import MainWindow
 from worker import Worker
@@ -27,9 +27,11 @@ class Application:
         """
         Метод запускает процесс обработки файлов в новом потоке.
         """
-        # Если поток уже запущен, останавливаем его перед новым запуском (опционально)
+        # --- ИСПРАВЛЕННАЯ ПРОВЕРКА ---
+        # Проверяем, существует ли объект и запущен ли он
         if self.worker_thread is not None and self.worker_thread.isRunning():
-            # В реальном приложении нужно добавить логику остановки (self.worker_logic.stop())
+            QMessageBox.warning(self.main_window, "Внимание",
+                                "Предыдущая обработка еще не завершена. Пожалуйста, подождите.")
             return
 
             # 1. Создаем новый QThread
@@ -42,26 +44,21 @@ class Application:
         self.worker_logic.moveToThread(self.worker_thread)
 
         # 4. Соединяем сигналы Worker'а со слотами в MainWindow (GUI)
-        # Когда Worker сообщает, что данные готовы, MainWindow добавляет строку в таблицу
         self.worker_logic.data_ready.connect(self.main_window.add_file_row)
-
-        # Когда Worker закончил всю работу, вызываем метод завершения в MainWindow
         self.worker_logic.finished.connect(self.main_window.processing_finished)
-
-        # Соединяем сигнал обновления статуса с статус-баром MainWindow
         self.worker_logic.progress_update.connect(self.main_window.status_update_signal.emit)
-
-        # Соединяем сигнал ошибки с отображением ошибки в MainWindow
         self.worker_logic.error.connect(self.main_window.display_error)
 
         # 5. Соединяем сигнал запуска потока с методом, который выполняет работу
-        # Когда поток стартует, он вызывает run_processing
         self.worker_thread.started.connect(self.worker_logic.run_processing)
 
-        # Также полезно удалить объекты после завершения потока
+        # --- ИСПРАВЛЕННОЕ УПРАВЛЕНИЕ ПАМЯТЬЮ ---
+        # Когда логика worker завершится (сигнал finished), мы останавливаем QThread (слот quit)
         self.worker_logic.finished.connect(self.worker_thread.quit)
-        self.worker_thread.finished.connect(self.worker_thread.deleteLater)
-        self.worker_logic.deleteLater()
+
+        # Мы НЕ используем deleteLater() здесь. Python и PyQtGC (Garbage Collector)
+        # справятся с удалением объектов, когда они больше не нужны,
+        # без ручного вызова, который приводил к ошибке доступа.
 
         # 6. Запускаем поток
         self.worker_thread.start()
