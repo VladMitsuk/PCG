@@ -28,7 +28,7 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("InfoReader")
+        self.setWindowTitle("2 InfoReader")
         self.setGeometry(100, 100, 1200, 800)
 
         self.init_ui()
