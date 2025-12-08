@@ -1,7 +1,7 @@
 import cv2
 from PyQt6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
                              QPushButton, QLabel, QFileDialog, QSizePolicy,
-                             QComboBox, QSpinBox, QGroupBox, QMenu, QMessageBox)
+                             QComboBox, QSpinBox, QGroupBox, QMenu, QMessageBox, QLineEdit)
 from PyQt6.QtGui import QImage, QPixmap, QAction
 from PyQt6.QtCore import Qt
 
@@ -39,7 +39,7 @@ class ImageProcessorWindow(QMainWindow):
         control_panel = QVBoxLayout()
 
         # 1. Общий выбор метода (для будущих расширений)
-        control_panel.addWidget(QLabel("### Выбор метода:"))
+        control_panel.addWidget(QLabel("Выбор метода:"))
         self.combo_method_selector = QComboBox()
         self.combo_method_selector.addItem("Морфологическая обработка")
         # self.combo_method_selector.addItem("Фильтрация") # Задел на будущее
@@ -51,12 +51,12 @@ class ImageProcessorWindow(QMainWindow):
 
         morph_layout.addWidget(QLabel("Операция:"))
         self.combo_operation = QComboBox()
-        self.combo_operation.addItems(['erosion', 'dilation', 'opening', 'closing'])
+        self.combo_operation.addItems(['Эрозия', 'Дилатация', 'Открытие', 'Закрытие'])
         morph_layout.addWidget(self.combo_operation)
 
         morph_layout.addWidget(QLabel("Форма ядра:"))
         self.combo_shape = QComboBox()
-        self.combo_shape.addItems(['rect', 'ellipse', 'cross'])
+        self.combo_shape.addItems(['Прямоугольник', 'Окружность', 'Крест'])
         morph_layout.addWidget(self.combo_shape)
 
         morph_layout.addWidget(QLabel("Размер ядра:"))
@@ -64,6 +64,8 @@ class ImageProcessorWindow(QMainWindow):
         self.spinbox_size.setRange(1, 21)
         self.spinbox_size.setSingleStep(2)
         self.spinbox_size.setValue(3)
+        self.spinbox_size.findChild(QLineEdit)
+
         morph_layout.addWidget(self.spinbox_size)
 
         morph_group.setLayout(morph_layout)
@@ -96,7 +98,6 @@ class ImageProcessorWindow(QMainWindow):
             self.lbl_result.clear()
 
     def display_image(self, img_data, label):
-        # ... функция display_image остается прежней ...
         if img_data is None: return
 
         if len(img_data.shape) == 3:  # Цветное BGR
