@@ -1,4 +1,3 @@
-# algorithms.py
 
 # Сазерленд-Коэн
 INSIDE, LEFT, RIGHT, BOTTOM, TOP = 0, 1, 2, 4, 8

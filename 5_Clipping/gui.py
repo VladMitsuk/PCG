@@ -1,4 +1,3 @@
-# gui.py
 import tkinter as tk
 from tkinter import ttk
 import algorithms
@@ -7,7 +6,7 @@ import algorithms
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Clipping Algorithms Lab")
+        self.title("Clipping Lab")
         self.geometry("1200x850")
         self.scale, self.off_x, self.off_y = 1.0, 150, 150
         self.setup_ui()
@@ -22,7 +21,6 @@ class App(tk.Tk):
         ctrl = tk.Frame(self, width=400)
         ctrl.pack(side=tk.RIGHT, fill=tk.Y, padx=10, pady=10)
 
-        # Выбор алгоритма
         tk.Label(ctrl, text="Алгоритмы", font=('Arial', 10, 'bold')).pack(anchor="w")
         self.algo_var = tk.StringVar(value="Сазерленд-Коэн")
         algo_cb = ttk.Combobox(ctrl, textvariable=self.algo_var, state="readonly",
@@ -30,7 +28,6 @@ class App(tk.Tk):
         algo_cb.pack(fill=tk.X, pady=5)
         algo_cb.bind("<<ComboboxSelected>>", lambda e: self.switch_ui())
 
-        # Окна ввода отсекателя
         self.clipping_frame = tk.LabelFrame(ctrl, text="Окна ввода отсекателя", padx=5, pady=5)
         self.clipping_frame.pack(fill=tk.X, pady=5)
 
@@ -48,7 +45,6 @@ class App(tk.Tk):
         tk.Button(self.poly_container, text="OK", command=self.update_poly_fields).pack(side=tk.LEFT)
         self.poly_fields_frame = tk.Frame(self.clipping_frame)
 
-        # Окна ввода отрезков
         tk.Label(ctrl, text="Окна ввода отрезков:", font=('Arial', 10, 'bold')).pack(anchor="w", pady=(10, 0))
         self.lines_count_entry = tk.Entry(ctrl);
         self.lines_count_entry.insert(0, "2");
@@ -140,18 +136,21 @@ class App(tk.Tk):
             self.canvas.create_line(sx, -5000, sx, 5000, fill="#f0f0f0")
             self.canvas.create_line(-5000, sy, 5000, sy, fill="#f0f0f0")
 
-        # ОСИ координат
+        # Оси
         ox, oy = self.to_screen(0, 0)
-        self.canvas.create_line(-5000, oy, 5000, oy, fill="black", width=1)  # Ось X
-        self.canvas.create_line(ox, -5000, ox, 5000, fill="black", width=1)  # Ось Y
+        self.canvas.create_line(-5000, oy, 5000, oy, fill="black")
+        self.canvas.create_line(ox, -5000, ox, 5000, fill="black")
 
         try:
             is_suth = "Сазерленд" in self.algo_var.get()
+            # Фигура
             if is_suth:
                 r = list(map(float, self.rect_input.get().split()))
                 p1 = self.to_screen(r[0], r[1]);
                 p2 = self.to_screen(r[2], r[3])
                 self.canvas.create_rectangle(p1[0], p1[1], p2[0], p2[1], outline="blue", width=2)
+                self.canvas.create_text(p1[0], p1[1] - 12, text=f"V1({r[0]},{r[1]})", fill="blue")
+                self.canvas.create_text(p2[0], p2[1] + 12, text=f"V2({r[2]},{r[3]})", fill="blue")
             else:
                 poly = [tuple(map(float, e.get().split())) for e in self.poly_entries]
                 scr_p = []
@@ -162,12 +161,17 @@ class App(tk.Tk):
                                             font=("Arial", 9))
                 self.canvas.create_polygon(scr_p, fill="", outline="blue", width=2)
 
+            # Линии
             for i, e in enumerate(self.line_entries):
                 c = list(map(float, e.get().split()))
                 p1, p2 = (c[0], c[1]), (c[2], c[3])
                 sp1, sp2 = self.to_screen(*p1), self.to_screen(*p2)
                 self.canvas.create_line(sp1, sp2, fill="red", dash=(4, 2))
+
+                # Подписи на обоих концах в формате L1(x, y)
                 self.canvas.create_text(sp1[0], sp1[1] - 10, text=f"L{i + 1}({int(p1[0])},{int(p1[1])})", fill="red",
+                                        font=("Arial", 8))
+                self.canvas.create_text(sp2[0], sp2[1] - 10, text=f"L{i + 1}({int(p2[0])},{int(p2[1])})", fill="red",
                                         font=("Arial", 8))
 
                 res = algorithms.cohen_sutherland(p1, p2, r) if is_suth else algorithms.cyrus_beck(p1, p2, poly)
