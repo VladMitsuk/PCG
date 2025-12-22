@@ -184,3 +184,8 @@ class App(tk.Tk):
                                             fill="green", font=("Arial", 8, "bold"))
         except:
             pass
+
+
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()
