@@ -1,0 +1,176 @@
+/3_ImageProcessing/data/WaldoBeach.jpg
+/.idea/.gitignore
+/3_ImageProcessing/data/aero1.jpg
+/3_ImageProcessing/data/aero3.jpg
+/3_ImageProcessing/data/aloeGT.png
+/3_ImageProcessing/data/aloeL.jpg
+/3_ImageProcessing/data/aloeR.jpg
+/1_ColorConv/build/main/Analysis-00.toc
+/2_InfoReader/build/main/Analysis-00.toc
+/3_ImageProcessing/build/main/Analysis-00.toc
+/4_Rasterisation/build/main/Analysis-00.toc
+/5_Clipping/build/main/Analysis-00.toc
+/6_Visual3D/build/Visual3D/Analysis-00.toc
+/3_ImageProcessing/data/apple.jpg
+/3_ImageProcessing/data/baboon.jpg
+/3_ImageProcessing/data/Background_Subtraction_Tutorial_frame.png
+/3_ImageProcessing/data/Background_Subtraction_Tutorial_frame_1.png
+/1_ColorConv/build/main/base_library.zip
+/2_InfoReader/build/main/base_library.zip
+/3_ImageProcessing/build/main/base_library.zip
+/4_Rasterisation/build/main/base_library.zip
+/5_Clipping/build/main/base_library.zip
+/6_Visual3D/build/Visual3D/base_library.zip
+/3_ImageProcessing/data/basketball1.png
+/3_ImageProcessing/data/basketball2.png
+/3_ImageProcessing/data/Blender_Suzanne1.jpg
+/3_ImageProcessing/data/Blender_Suzanne2.jpg
+/3_ImageProcessing/data/blobs.jpg
+/3_ImageProcessing/data/blox.jpg
+/3_ImageProcessing/data/board.jpg
+/3_ImageProcessing/data/box.png
+/3_ImageProcessing/data/box_in_scene.png
+/3_ImageProcessing/data/building.jpg
+/3_ImageProcessing/data/butterfly.jpg
+/3_ImageProcessing/data/cards.png
+/3_ImageProcessing/data/chessboard.png
+/2_InfoReader/Для проверки Lab2/desktop.ini
+/3_ImageProcessing/data/detect_blob.png
+/3_ImageProcessing/data/digits.png
+/3_ImageProcessing/data/ela_modified.jpg
+/3_ImageProcessing/data/ela_original.jpg
+/3_ImageProcessing/data/ellipses.jpg
+/1_ColorConv/build/main/EXE-00.toc
+/2_InfoReader/build/main/EXE-00.toc
+/3_ImageProcessing/build/main/EXE-00.toc
+/4_Rasterisation/build/main/EXE-00.toc
+/5_Clipping/build/main/EXE-00.toc
+/6_Visual3D/build/Visual3D/EXE-00.toc
+/2_InfoReader/Для проверки Lab2/Fig1.15(a).bmp
+/2_InfoReader/Для проверки Lab2/Fig1.15(b).BMP
+/2_InfoReader/Для проверки Lab2/Fig2.19(a).BMP
+/2_InfoReader/Для проверки Lab2/Fig2.22(a).BMP
+/2_InfoReader/Для проверки Lab2/Fig3.15(a)1top.bmp
+/2_InfoReader/Для проверки Lab2/Fig3.15(a)2.bmp
+/2_InfoReader/Для проверки Lab2/Fig3.15(a)3.bmp
+/2_InfoReader/Для проверки Lab2/Fig3.15(a)4.bmp
+/2_InfoReader/Для проверки Lab2/Fig3.27(a).BMP
+/2_InfoReader/Для проверки Lab2/Fig3.35(a).bmp
+/2_InfoReader/Для проверки Lab2/Fig3.37(a).bmp
+/2_InfoReader/Для проверки Lab2/Fig3.45(a).bmp
+/2_InfoReader/Для проверки Lab2/Fig4.19(a).bmp
+/2_InfoReader/Для проверки Lab2/Fig4.20(a).BMP
+/2_InfoReader/Для проверки Lab2/Fig4.28(a).BMP
+/2_InfoReader/Для проверки Lab2/Fig5.04(i).bmp
+/2_InfoReader/Для проверки Lab2/Fig5.08(a).bmp
+/2_InfoReader/Для проверки Lab2/Fig5.08(b).bmp
+/2_InfoReader/Для проверки Lab2/Fig5.10(a).bmp
+/2_InfoReader/Для проверки Lab2/Fig9.11(a).bmp
+/2_InfoReader/Для проверки Lab2/Fig9.14(a).bmp
+/2_InfoReader/Для проверки Lab2/Fig9.16(a).bmp
+/2_InfoReader/Для проверки Lab2/Fig10.15(a).BMP
+/2_InfoReader/Для проверки Lab2/Fig10.29(a).bmp
+/3_ImageProcessing/data/fruits.jpg
+/3_ImageProcessing/data/gradient.png
+/3_ImageProcessing/data/graf1.png
+/3_ImageProcessing/data/hand.jpg
+/3_ImageProcessing/data/HappyFish.jpg
+/3_ImageProcessing/data/home.jpg
+/3_ImageProcessing/data/house.jpg
+/3_ImageProcessing/data/imageTextN.png
+/3_ImageProcessing/data/imageTextR.png
+/3_ImageProcessing/data/left.jpg
+/3_ImageProcessing/data/left01.jpg
+/3_ImageProcessing/data/left02.jpg
+/3_ImageProcessing/data/left03.jpg
+/3_ImageProcessing/data/left04.jpg
+/3_ImageProcessing/data/lena.jpg
+/3_ImageProcessing/data/lena_tmpl.jpg
+/3_ImageProcessing/data/licenseplate_motion.jpg
+/3_ImageProcessing/data/LinuxLogo.jpg
+/1_ColorConv/dist/main.exe
+/1_ColorConv/build/main/main.pkg
+/2_InfoReader/build/main/main.pkg
+/3_ImageProcessing/build/main/main.pkg
+/4_Rasterisation/build/main/main.pkg
+/5_Clipping/build/main/main.pkg
+/1_ColorConv/main.spec
+/2_InfoReader/main.spec
+/3_ImageProcessing/main.spec
+/4_Rasterisation/main.spec
+/5_Clipping/main.spec
+/3_ImageProcessing/data/mask.png
+/3_ImageProcessing/data/messi5.jpg
+/3_ImageProcessing/data/minions.jpg
+/.idea/misc.xml
+/3_ImageProcessing/data/ml.png
+/.idea/modules.xml
+/3_ImageProcessing/data/notes.png
+/3_ImageProcessing/data/opencv-logo.png
+/3_ImageProcessing/data/opencv-logo-white.png
+/3_ImageProcessing/data/orange.jpg
+/3_ImageProcessing/data/Origin_of_Species.jpg
+/3_ImageProcessing/data/pca_test1.jpg
+/.idea/PCG.iml
+/3_ImageProcessing/data/pic1.png
+/3_ImageProcessing/data/pic2.png
+/3_ImageProcessing/data/pic3.png
+/3_ImageProcessing/data/pic4.png
+/3_ImageProcessing/data/pic5.png
+/3_ImageProcessing/data/pic6.png
+/1_ColorConv/build/main/PKG-00.toc
+/2_InfoReader/build/main/PKG-00.toc
+/3_ImageProcessing/build/main/PKG-00.toc
+/4_Rasterisation/build/main/PKG-00.toc
+/5_Clipping/build/main/PKG-00.toc
+/6_Visual3D/build/Visual3D/PKG-00.toc
+/.idea/inspectionProfiles/profiles_settings.xml
+/1_ColorConv/build/main/PYZ-00.pyz
+/2_InfoReader/build/main/PYZ-00.pyz
+/3_ImageProcessing/build/main/PYZ-00.pyz
+/4_Rasterisation/build/main/PYZ-00.pyz
+/5_Clipping/build/main/PYZ-00.pyz
+/6_Visual3D/build/Visual3D/PYZ-00.pyz
+/1_ColorConv/build/main/PYZ-00.toc
+/2_InfoReader/build/main/PYZ-00.toc
+/3_ImageProcessing/build/main/PYZ-00.toc
+/4_Rasterisation/build/main/PYZ-00.toc
+/5_Clipping/build/main/PYZ-00.toc
+/6_Visual3D/build/Visual3D/PYZ-00.toc
+/3_ImageProcessing/data/right.jpg
+/3_ImageProcessing/data/right01.jpg
+/3_ImageProcessing/data/right02.jpg
+/3_ImageProcessing/data/right03.jpg
+/3_ImageProcessing/data/right04.jpg
+/3_ImageProcessing/data/right05.jpg
+/3_ImageProcessing/data/right06.jpg
+/3_ImageProcessing/data/right07.jpg
+/3_ImageProcessing/data/rubberwhale1.png
+/3_ImageProcessing/data/rubberwhale2.png
+/3_ImageProcessing/data/scan.jpg
+/3_ImageProcessing/data/smarties.png
+/3_ImageProcessing/data/someshapes.jpg
+/3_ImageProcessing/data/starry_night.jpg
+/3_ImageProcessing/data/stuff.jpg
+/3_ImageProcessing/data/sudoku.png
+/3_ImageProcessing/data/templ.png
+/3_ImageProcessing/data/text_defocus.jpg
+/3_ImageProcessing/data/text_motion.jpg
+/3_ImageProcessing/data/tmpl.png
+/.idea/vcs.xml
+/6_Visual3D/build/Visual3D/Visual3D.pkg
+/6_Visual3D/Visual3D.spec
+/3_ImageProcessing/data/waldo.jpg
+/1_ColorConv/build/main/warn-main.txt
+/2_InfoReader/build/main/warn-main.txt
+/3_ImageProcessing/build/main/warn-main.txt
+/4_Rasterisation/build/main/warn-main.txt
+/5_Clipping/build/main/warn-main.txt
+/6_Visual3D/build/Visual3D/warn-Visual3D.txt
+/3_ImageProcessing/data/WindowsLogo.jpg
+/1_ColorConv/build/main/xref-main.html
+/2_InfoReader/build/main/xref-main.html
+/3_ImageProcessing/build/main/xref-main.html
+/4_Rasterisation/build/main/xref-main.html
+/5_Clipping/build/main/xref-main.html
+/6_Visual3D/build/Visual3D/xref-Visual3D.html
