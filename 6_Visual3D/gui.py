@@ -2,7 +2,7 @@ import sys
 import numpy as np
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                              QHBoxLayout, QPushButton, QTextEdit, QLabel)
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtOpenGL import QGLWidget
 from OpenGL.GL import *
 from OpenGL.GLU import *
@@ -11,6 +11,9 @@ from logic_3d import Logic3D
 
 
 class GLWidget(QGLWidget):
+    # Сигнал, который будет испускаться при любом изменении (вращение, зум, перемещение)
+    matrix_changed = pyqtSignal()
+
     def __init__(self, logic, parent=None):
         super(GLWidget, self).__init__(parent)
         self.logic = logic
@@ -34,12 +37,11 @@ class GLWidget(QGLWidget):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glLoadIdentity()
 
-        # Камера отодвинута назад
         glTranslatef(0, 0, -5)
 
-        glRotatef(20, 1, 0, 0)  # Наклон вниз (вокруг X)
-        glRotatef(-30, 0, 1, 0)  # Поворот вбок (вокруг Y)
-        # --------------------------------------------------------------------
+        # Поворот сцены для изометрии (чтобы видеть 3 оси)
+        glRotatef(20, 1, 0, 0)
+        glRotatef(-30, 0, 1, 0)
 
         self.draw_axes()
 
@@ -59,15 +61,12 @@ class GLWidget(QGLWidget):
 
     def draw_axes(self):
         glBegin(GL_LINES)
-        # X - Red
         glColor3f(1, 0, 0);
         glVertex3f(0, 0, 0);
         glVertex3f(10, 0, 0)
-        # Y - Green
         glColor3f(0, 1, 0);
         glVertex3f(0, 0, 0);
         glVertex3f(0, 10, 0)
-        # Z - Blue
         glColor3f(0, 0, 1);
         glVertex3f(0, 0, 0);
         glVertex3f(0, 0, 10)
@@ -94,18 +93,27 @@ class GLWidget(QGLWidget):
         dx = event.x() - self.last_pos.x()
         dy = event.y() - self.last_pos.y()
 
+        updated = False
         if event.buttons() & Qt.LeftButton:
             self.logic.rotate(dx, dy)
-            self.update()
+            updated = True
         elif event.buttons() & Qt.RightButton:
             self.logic.pan(dx, dy)
+            updated = True
+
+        if updated:
             self.update()
+            # Отправляем сигнал об изменении матрицы
+            self.matrix_changed.emit()
+
         self.last_pos = event.pos()
 
     def wheelEvent(self, event):
         angle = event.angleDelta().y()
         self.logic.zoom(angle)
         self.update()
+        # Отправляем сигнал об изменении матрицы
+        self.matrix_changed.emit()
 
     def toggle_projections(self):
         self.show_projections = not self.show_projections
@@ -138,9 +146,8 @@ class MainWindow(QMainWindow):
         )
         panel_layout.addWidget(lbl_info)
 
-        btn_matrix = QPushButton("Вывести матрицу\nпреобразования")
-        btn_matrix.clicked.connect(self.print_matrix)
-        panel_layout.addWidget(btn_matrix)
+        # Кнопка удалена, вместо нее метка заголовка
+        panel_layout.addWidget(QLabel("<b>Model Matrix:</b>"))
 
         self.text_output = QTextEdit()
         self.text_output.setReadOnly(True)
@@ -153,12 +160,17 @@ class MainWindow(QMainWindow):
 
         panel_layout.addStretch()
 
-    def print_matrix(self):
+        # Подключаем сигнал изменения матрицы к функции обновления текста
+        self.gl_widget.matrix_changed.connect(self.update_matrix_text)
+
+        # Первичное обновление текста при запуске
+        self.update_matrix_text()
+
+    def update_matrix_text(self):
+        """Обновляет текст в окне на основе текущей матрицы."""
         m = self.logic.get_model_matrix()
-        s = "Model Matrix:\n"
-        s += np.array2string(m, formatter={'float_kind': lambda x: "%.2f" % x}, separator='\t')
+        s = np.array2string(m, formatter={'float_kind': lambda x: "%.2f" % x}, separator='\t')
         self.text_output.setText(s)
-        print(s)
 
 
 if __name__ == "__main__":
